@@ -5,11 +5,17 @@ implements the [xFUND Router & Data Provision](https://github.com/unification-co
 suite.
 
 It contains everything required to get started, including a skeleton, simple smart contract
-which can be deployed and tested.
+([DemoConsumer.sol](contracts/DemoConsumer.sol)) which can be modified, deployed and tested.
 
 ## Deploying
 
 ### 1. Install dependencies
+
+Clone this repo:
+
+```bash 
+git clone https://github.com/unification-com/data-consumer-demo
+```
 
 `NodeJS` is required to use this software. We recommend using 
 [nvm](https://github.com/nvm-sh/nvm) to manage NodeJS installations, and currently.

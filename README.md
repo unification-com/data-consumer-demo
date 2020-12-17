@@ -160,8 +160,12 @@ truffle(rinkeby)> demoConsumer.requestData(provider, endpoint, 80, {from: consum
 ```
 
 The first command encodes the data endpoint (the data we want to get) into a bytes32
-value. We are requesting the average US dollar price of Bitcoin, with outliers (very high
-or very low) values removed from the final mean calculation.
+value. We are requesting the average (`PRC.AVG`) US dollar (`USD`) price of Bitcoin (`BTC`), with 
+outliers (very high or very low) values removed (`IDQ`) from the final mean calculation.
+
+A full list of supported currency pairs is available from the [Finchains API](https://crypto.finchains.io/api/pairs)
+
+The Data provider currently supports the `PRC.AVG` and `PRC.AVG.IDQ` data endpoints.
 
 It may take a block or two for the request to be fully processed - the provider will listen for
 the request, then submit a Tx with the data to the `Router`, which will forward it to

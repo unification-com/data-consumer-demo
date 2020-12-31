@@ -367,10 +367,10 @@
   dependencies:
     web3 "*"
 
-"@unification-com/xfund-router@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@unification-com/xfund-router/-/xfund-router-0.0.5.tgz#a6587e2e691d0752644b6676053b9c6b6e4ca130"
-  integrity sha512-N5ICDWTQSb7utpRTnGxK4jM6hQMInvRbZ9hgJArC4xxkfNx00T5SSVBAsg722YDQRRu7D7Rea5Lg7XZYnMCrMg==
+"@unification-com/xfund-router@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@unification-com/xfund-router/-/xfund-router-0.0.6.tgz#4f632f106a53c908207635d635df3e44b67f1a53"
+  integrity sha512-HO6wG+dcmfj9d4NkoUWTrEDm4AfjcIOrFvlrBoaLohg/4EpYPUCRMIhnoPI9t7UxjCIwaw0KP3mzU8a3C5Xo6Q==
   dependencies:
     "@openzeppelin/contracts" "^3.3.0"
     arg "^5.0.0"

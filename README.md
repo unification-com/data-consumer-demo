@@ -191,5 +191,12 @@ truffle(rinkeby)> priceAfter.toString()
 
 The price should now be a non-zero value.
 
+To convert to the actual price:
+
+```bash
+truffle(rinkeby)> let realPrice = web3.utils.fromWei(priceAfter)
+truffle(rinkeby)> realPrice.toString()
+```
+
 **Note**: the Oracle sends all price data converted to `actualPrice * (10 ** 18)` in
 order to remove any decimals.

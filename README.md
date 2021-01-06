@@ -70,6 +70,17 @@ address defined in your `.env`, and deploy the smart contract on Rinkeby testnet
 npx truffle deploy --network=rinkeby
 ```
 
+#### 4.1 OPtional - upload and verify contract code to Etherscan
+
+Optionally, you can upload the source code and verify the contract on Etherscan, so that
+you can interact with it via Etherscan. You will need an 
+[Etherscan API key](https://etherscan.io/apis), and to add the value to your `.env`
+by setting the `ETHERSCAN_API` value. Once that's done, run:
+
+```bash
+npx truffle run verify DemoConsumer --network=rinkeby
+```
+
 ## Interacting
 
 Run the `truffle` development console, and connect to the Rinkeby testnet:

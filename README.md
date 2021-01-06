@@ -53,10 +53,10 @@ The required deployed contract addresses are as follows:
 
 #### Testnet (Rinkeby)
 
-`ROUTER_ADDRESS=0xa73863Af7c7ff1D7f0c1324f609bdd306868Bb98`  
-`CONSUMER_LIB_ADDRESS=0x5AB9426a904a14116E94F0269604f0785c03ED7D`  
+`ROUTER_ADDRESS=0x3c0973B8Bf9bCafaa5e748aC2617b1C19b15dD8B`  
+`CONSUMER_LIB_ADDRESS=0xD64127b18F8280F0528Cf5b77402a358cC21612E`  
 
-The `xFUNDMOCK` Token is at `0x2dd7aF39Fb46E457A47Fb8D10f135cA6ca77Eb38` (required to 
+The `xFUNDMOCK` Token is at `0x81366aF400cf3050eA04B1BcB8592C3203C84dFb` (required to 
 fund any test accounts)
 
 Finchains Data Provider Oracle: `0x611661f4B5D82079E924AcE2A6D113fAbd214b14`
@@ -93,7 +93,7 @@ truffle(rinkeby)> let demoConsumer = await DemoConsumer.deployed()
 The following steps need only be done periodically, to ensure all parties have
 the correct amount of tokens and gas to pay for data.
 
-Go to [xFUNDMOCK](https://rinkeby.etherscan.io/address/0x2dd7aF39Fb46E457A47Fb8D10f135cA6ca77Eb38#writeContract)
+Go to [xFUNDMOCK](https://rinkeby.etherscan.io/address/0x81366aF400cf3050eA04B1BcB8592C3203C84dFb#writeContract)
 on Etherscan, and connect MetaMask **with the account used to deploy the `DemoConsumer`
 smart contract**, then run the `gimme()` function. This is a faucet function, and will
 supply your wallet with 10 `xFUNDMOCK` tokens. You may do this once per hour.
@@ -119,7 +119,7 @@ to supply our `DemoConsumer` smart contract with data. Only authorised provider 
 can send transactions to supply your contract with data.
 
 ```bash 
-truffle(rinkeby)> demoConsumer.addDataProvider(provider, 100000000, {from: consumerOwner})
+truffle(rinkeby)> demoConsumer.addRemoveDataProvider(provider, 100000000, false, {from: consumerOwner})
 ```
 
 This will authorise `0x611661f4B5D82079E924AcE2A6D113fAbd214b14` to send data to your

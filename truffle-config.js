@@ -4,6 +4,7 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 const {
   ETH_PKEY,
   INFURA_PROJECT_ID,
+  ETHERSCAN_API,
 } = process.env
 
 module.exports = {
@@ -41,6 +42,16 @@ module.exports = {
       gasPrice: 120000000000 // 120e9 = 120 gwei
     }
   },
+
+
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+
+  api_keys: {
+    etherscan: ETHERSCAN_API
+  },
+
   // Configure your compilers
   compilers: {
     solc: {

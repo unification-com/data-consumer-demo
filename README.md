@@ -1,11 +1,18 @@
 # Data Consumer Demo
 
-This repo contains a simple implementation of a demo Consumer smart contract, which 
+This repo contains a couple of simple implementations of a demo Consumer smart contract, which 
 implements the [xFUND Router & Data Provision](https://github.com/unification-com/xfund-router)
 suite.
 
 It contains everything required to get started, including a skeleton, simple smart contract
 ([DemoConsumer.sol](contracts/DemoConsumer.sol)) which can be modified, deployed and tested.
+
+Additionally, [DemoConsumerCustom.sol](contracts/DemoConsumerCustom.sol) contains
+more sophisticated custom data request and receive functions to give an example of
+how the base contract can be extended to suite your needs.
+
+The interaction guide below focuses on the simpler `DemoConsumer` smart contract, but
+both are deployed during the process, and can be interacted with.
 
 ## Deploying
 
@@ -70,7 +77,7 @@ address defined in your `.env`, and deploy the smart contract on Rinkeby testnet
 npx truffle deploy --network=rinkeby
 ```
 
-#### 4.1 OPtional - upload and verify contract code to Etherscan
+#### 4.1 Optional - upload and verify contract code to Etherscan
 
 Optionally, you can upload the source code and verify the contract on Etherscan, so that
 you can interact with it via Etherscan. You will need an 
@@ -79,9 +86,19 @@ by setting the `ETHERSCAN_API` value. Once that's done, run:
 
 ```bash
 npx truffle run verify DemoConsumer --network=rinkeby
+npx truffle run verify DemoConsumerCustom --network=rinkeby
 ```
 
 ## Interacting
+
+**Note**: Both demo contracts `DemoConsumer.sol` and `DemoConsumerCustom.sol` should now have been
+deployed. The following interaction overview covers the simpler `DemoConsumer` smart
+contract. With the exceptions of calling the `requestData` and getting the price data from
+`DemoConsumer` contract, the following steps are the same for both demo contracts.
+
+See the `customRequestData` and `getPrice` functions in the 
+[DemoConsumerCustom.sol](contracts/DemoConsumerCustom.sol) contract
+for examples on how to interact with the customised version.
 
 Run the `truffle` development console, and connect to the Rinkeby testnet:
 

@@ -197,7 +197,8 @@ The first command encodes the data endpoint (the data we want to get) into a byt
 value. We are requesting the mean US dollar (`USD`) price of Bitcoin (`BTC`), with 
 outliers (very high or very low) values removed (`PR.AVI`) from the final mean calculation.
 
-A full list of supported currency pairs is available from the [Finchains API](https://crypto.finchains.io/api/pairs)
+A full list of supported API endpoints is available from the 
+[Finchains OoO API Docs](https://docs.finchains.io/guide/ooo_api.html)
 
 It may take a block or two for the request to be fully processed - the provider will listen for
 the request, then submit a Tx with the data to the `Router`, which will forward it to

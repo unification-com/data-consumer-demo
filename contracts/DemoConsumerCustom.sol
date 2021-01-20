@@ -52,7 +52,7 @@ contract DemoConsumerCustom  is ConsumerBase {
         string memory _target,
         bytes32 _endpoint,
         address payable _dataProvider,
-        uint256 _gasPrice)
+        uint64 _gasPrice)
     external {
 
         // store endpoint/pair lookup for using later in receiveData

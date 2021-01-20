@@ -60,10 +60,10 @@ The required deployed contract addresses are as follows:
 
 #### Testnet (Rinkeby)
 
-`ROUTER_ADDRESS=0x3c0973B8Bf9bCafaa5e748aC2617b1C19b15dD8B`  
-`CONSUMER_LIB_ADDRESS=0xD64127b18F8280F0528Cf5b77402a358cC21612E`  
+`ROUTER_ADDRESS=0x386a4e4E5347ad80486baEAd6EE9922C03F328FA`  
+`CONSUMER_LIB_ADDRESS=0xeB11a442B3911A3051470403EdECF0FC5e779bB2`  
 
-The `xFUNDMOCK` Token is at `0x81366aF400cf3050eA04B1BcB8592C3203C84dFb` (required to 
+The `xFUNDMOCK` Token is at `0x0E68C4A9586b86b08b12a9012Fa69c624f70cbF2` (required to 
 fund any test accounts)
 
 Finchains Data Provider Oracle: `0x611661f4B5D82079E924AcE2A6D113fAbd214b14`
@@ -106,25 +106,23 @@ Run the `truffle` development console, and connect to the Rinkeby testnet:
 npx truffle console --network=rinkeby
 ```
 
-Within the `truffle` console, load the contract instances, and accounts
-ready for interaction
-
-```bash 
-truffle(rinkeby)> let accounts = await web3.eth.getAccounts()
-truffle(rinkeby)> let consumerOwner = accounts[0]
-truffle(rinkeby)> let provider = "0x611661f4B5D82079E924AcE2A6D113fAbd214b14"
-truffle(rinkeby)> let demoConsumer = await DemoConsumer.deployed()
-```
-
 ### Initialising
 
 The following steps need only be done periodically, to ensure all parties have
 the correct amount of tokens and gas to pay for data.
 
-Go to [xFUNDMOCK](https://rinkeby.etherscan.io/address/0x81366aF400cf3050eA04B1BcB8592C3203C84dFb#writeContract)
+Go to [xFUNDMOCK](https://rinkeby.etherscan.io/address/0x0E68C4A9586b86b08b12a9012Fa69c624f70cbF2#writeContract)
 on Etherscan, and connect MetaMask **with the account used to deploy the `DemoConsumer`
 smart contract**, then run the `gimme()` function. This is a faucet function, and will
 supply your wallet with 10 `xFUNDMOCK` tokens. You may do this once per hour.
+
+Within the `truffle` console, load the contract instances, and set some variables
+ready for interaction
+
+```bash 
+truffle(rinkeby)> let provider = "0x611661f4B5D82079E924AcE2A6D113fAbd214b14"
+truffle(rinkeby)> let demoConsumer = await DemoConsumer.deployed()
+```
 
 Get the deployed address for your `DemoConsumer` smart contract:
 
@@ -134,6 +132,13 @@ truffle(rinkeby)> demoConsumer.address
 
 Next, using either Etherscan, or MetaMask, transfer 5 `xFUNDMOCK` tokens to your
 `DemoConsumer` contract address.
+
+Get the current account information
+
+```bash
+truffle(rinkeby)> let accounts = await web3.eth.getAccounts()
+truffle(rinkeby)> let consumerOwner = accounts[0]
+```
 
 Then we need to allow the `Router` smart contract to pay fees on the `DemoConsumer` contract's
 behalf:

@@ -1,6 +1,6 @@
 {
   "name": "data-provider-demo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "truffle-config.js",
   "directories": {
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/unification-com/data-consumer-demo#readme",
   "dependencies": {
-    "@unification-com/xfund-router": "0.1.1",
+    "@unification-com/xfund-router": "0.2.0",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {

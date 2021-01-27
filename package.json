@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/unification-com/data-consumer-demo#readme",
   "dependencies": {
-    "@unification-com/xfund-router": "0.2.0",
+    "@unification-com/xfund-router": "0.2.1",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {

@@ -18,10 +18,11 @@ both are deployed during the process, and can be interacted with.
 
 ### 1. Install dependencies
 
-Clone this repo:
+Open a Terminal and clone this repo:
 
 ```bash 
 git clone https://github.com/unification-com/data-consumer-demo
+cd data-consumer-demo
 ```
 
 `NodeJS` is required to use this software. We recommend using 
@@ -51,33 +52,51 @@ Compile the contracts using `truffle`:
 npx truffle compile
 ```
 
-### 3. Set up `.env`
+### 3. Get some Test ETH for the Rinkeby Network
 
-Copy the `example.env` to `.env` and edit the variables, adding the address and private
-key for the **wallet you intend to use to deploy the smart contract**.
+Using Metamask, or similar Wallet manager create a new wallet address (or use an existing one).
 
-The required deployed contract addresses are as follows:
+Grab some test ETH from the [Rinkeby faucet](https://faucet.rinkeby.io/) for this wallet address.
+
+You will also need to make a note of the **Private Key** and **Wallet address** for the next 
+steps.
+
+This wallet will be used to deploy the smart contract, and interact with it.
+
+### 4. Set up `.env`
+
+Copy the `example.env` to `.env`:
+
+```bash
+cp example.env .env
+```
+
+Open the new `.env` file in a text editor and edit the variables, adding the private
+key for the **wallet you intend to use to deploy the smart contract** (the one from step 3)
+for the `ETH_PKEY` variable. You aill also need an [Infura])(https://infura.io) API key,
+and _optionally_ an [Etherscan](https://etherscan.io/apis) API key.
+
+The required deployed contract addresses for `.env` are as follows:
 
 #### Testnet (Rinkeby)
 
-`ROUTER_ADDRESS=0x8F7ce3091A3E77Ae9A0a3f984fE60A18824A0316`  
-`CONSUMER_LIB_ADDRESS=0xcfD6Df14fDF9f10D4C1ef648bAA668463Bc7e316`  
+`ROUTER_ADDRESS=0x358A975399E7A99013aA1233801eFFe21f19fDfC`  
+`CONSUMER_LIB_ADDRESS=0x7D9581C99A891cBfE9626d4aD0c2D24D4EDdfD74`  
 
-The `xFUNDMOCK` Token is at `0x263aBe98Cc954e02f3Bc822d15aaD107E20e0c95` (required to 
+The `xFUNDMOCK` Token is at `0x245330351344F9301690D5D8De2A07f5F32e1149` (required to 
 fund any test accounts)
 
 Finchains Data Provider Oracle: `0x611661f4B5D82079E924AcE2A6D113fAbd214b14`
 
-### 4. Deploy
+### 5. Deploy
 
-Grab some test ETH from the [Rinkeby faucet](https://faucet.rinkeby.io/) for the wallet
-address defined in your `.env`, and deploy the smart contract on Rinkeby testnet:
+Once your `.env` is configured, deploy the smart contract on Rinkeby testnet:
 
 ```bash 
 npx truffle deploy --network=rinkeby
 ```
 
-#### 4.1 Optional - upload and verify contract code to Etherscan
+#### 5.1 Optional - upload and verify contract code to Etherscan
 
 Optionally, you can upload the source code and verify the contract on Etherscan, so that
 you can interact with it via Etherscan. You will need an 
@@ -111,7 +130,7 @@ npx truffle console --network=rinkeby
 The following steps need only be done periodically, to ensure all parties have
 the correct amount of tokens and gas to pay for data.
 
-Go to [xFUNDMOCK](https://rinkeby.etherscan.io/address/0x263aBe98Cc954e02f3Bc822d15aaD107E20e0c95#writeContract)
+Go to [xFUNDMOCK](https://rinkeby.etherscan.io/address/0x245330351344F9301690D5D8De2A07f5F32e1149#writeContract)
 on Etherscan, and connect MetaMask **with the account used to deploy the `DemoConsumer`
 smart contract**, then run the `gimme()` function. This is a faucet function, and will
 supply your wallet with 10 `xFUNDMOCK` tokens. You may do this once per hour.
@@ -133,7 +152,7 @@ truffle(rinkeby)> demoConsumer.address
 Next, using either Etherscan, or MetaMask, transfer 5 `xFUNDMOCK` tokens to your
 `DemoConsumer` contract address.
 
-Get the current account information
+Wait for the transaction to succeed, then get the current account information
 
 ```bash
 truffle(rinkeby)> let accounts = await web3.eth.getAccounts()

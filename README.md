@@ -253,3 +253,20 @@ truffle(rinkeby)> realPrice.toString()
 
 **Note**: the Oracle sends all price data converted to `actualPrice * (10 ** 18)` in
 order to remove any decimals.
+
+## Helper scripts
+
+There are a couple of helper scripts in `dev_scripts` which can be run via Truffle
+to automate requesting and cancelling data requests on Rinkeby Testnet for your contract.
+
+Request data and check fulfilment with:
+
+```bash
+npx truffle exec dev_scripts/request-data.js --network=rinkeby
+```
+
+Send a data request and immediately cancel it with:
+
+```bash
+npx truffle exec dev_scripts/request-cancel.js --network=rinkeby
+```

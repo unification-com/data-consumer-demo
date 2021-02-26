@@ -32,7 +32,7 @@ module.exports = async function(callback) {
   console.log("waiting for fulfilment. This may take 3 - 4 blocks.")
   for(let i = 0; i <= 200; i +=1) {
     if(i % 30 === 0 && i > 1) {
-      console.log("check status")
+      console.log("checking status")
       const status = await router.methods.getRequestStatus(requestId).call()
       if(parseInt(status, 10) !== 1) {
         console.log("fulfilled")

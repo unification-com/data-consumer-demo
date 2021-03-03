@@ -27,7 +27,7 @@ module.exports = async function(callback) {
 
   const r = await demoConsumer.requestData(provider, endpoint, 80, {from: consumerOwner})
 
-  const requestId = r.receipt.rawLogs[0].topics[3]
+  const requestId = r.receipt.rawLogs[1].topics[3]
 
   console.log("requestId", requestId)
 

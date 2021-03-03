@@ -26,7 +26,8 @@ module.exports = async function(callback) {
 
   console.log("requesting", data)
   const r = await demoConsumer.requestData(provider, endpoint, 80, {from: consumerOwner})
-  const requestId = r.receipt.rawLogs[0].topics[3]
+  console.log(r)
+  const requestId = r.receipt.rawLogs[1].topics[3]
   console.log("requestId", requestId)
 
   console.log("waiting for fulfilment. This may take 3 - 4 blocks.")
@@ -34,6 +35,7 @@ module.exports = async function(callback) {
     if(i % 30 === 0 && i > 1) {
       console.log("checking status")
       const status = await router.methods.getRequestStatus(requestId).call()
+      console.log("status", status)
       if(parseInt(status, 10) !== 1) {
         console.log("fulfilled")
         console.log("get price")

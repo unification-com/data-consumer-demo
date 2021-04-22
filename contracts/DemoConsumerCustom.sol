@@ -1,11 +1,19 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.7.0 <0.8.0;
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 // must import this in order for it to connect to the system and network.
 import "@unification-com/xfund-router/contracts/lib/ConsumerBase.sol";
 
-contract DemoConsumerCustom  is ConsumerBase {
+contract DemoConsumerCustom  is ConsumerBase, Ownable {
+
+    // provider to use for data requests. Must be registered on Router
+    address private provider;
+
+    // default fee to use for data requests
+    uint256 private fee;
 
     // map bytes32(BaseTarget) to current price
     mapping(bytes32 => uint256) public prices;
@@ -19,14 +27,22 @@ contract DemoConsumerCustom  is ConsumerBase {
     // Will be called when data provider has sent data to the recieveData function
     event PriceDiff(bytes32 requestId, bytes32 pair, uint256 oldPrice, uint256 newPrice, int256 diff);
 
-    // Must pass the address of the Router smart contract to the constructor
-    // of your contract! Without it, your contract cannot interact with the
-    // system, nor request/receive any data.
-    // The constructor calls the parent constructor
-    // https://github.com/unification-com/xfund-router/blob/main/contracts/lib/ConsumerBase.sol#L46
-    // which in turn initialises the contract with the ConsumerLib.sol library
-    // https://github.com/unification-com/xfund-router/blob/main/contracts/lib/ConsumerLib.sol#L149
-    constructor(address _router) ConsumerBase(_router) { }
+    /**
+     * @dev constructor must pass the address of the Router and xFUND smart
+     * contracts to the constructor of your contract! Without it, this contract
+     * cannot interact with the system, nor request/receive any data.
+     * The constructor calls the parent ConsumerBase constructor to set these.
+     *
+     * @param _router address of the Router smart contract
+     * @param _xfund address of the xFUND smart contract
+     * @param _provider address of the default provider
+     * @param _fee uint256 default fee
+     */
+    constructor(address _router, address _xfund, address _provider, uint256 _fee)
+    ConsumerBase(_router, _xfund) {
+        provider = _provider;
+        fee = _fee;
+    }
 
     /**
      * @dev customRequestData - example custom end user function for requesting data.
@@ -44,16 +60,12 @@ contract DemoConsumerCustom  is ConsumerBase {
      * @param _base string the base currency, e.g. BTC
      * @param _target string the target currency, e.g. USD
      * @param _endpoint bytes32 the target currency, e.g. USD
-     * @param _dataProvider payable address of the data provider
-     * @param _gasPrice uint256 max gas price consumer is willing to pay for data fulfilment, in gwei
      */
     function customRequestData(
         string memory _base,
         string memory _target,
-        bytes32 _endpoint,
-        address payable _dataProvider,
-        uint64 _gasPrice)
-    external {
+        bytes32 _endpoint)
+    external onlyOwner {
 
         // store endpoint/pair lookup for using later in receiveData
         bytes32 pair = pairAsBytes32(_base, _target);
@@ -61,10 +73,71 @@ contract DemoConsumerCustom  is ConsumerBase {
 
         // call the underlying Consumer.sol lib's requestData function.
         // requestData returns the bytes32 request ID, which we can store and use later
-        bytes32 requestId = requestData(_dataProvider, _endpoint, _gasPrice);
+        bytes32 requestId = _requestData(provider, fee, _endpoint);
 
         // store the request ID/endpoint lookup for use in the receiveData function etc.
         requests[requestId] = _endpoint;
+    }
+
+    /**
+     * @dev setProvider change default provider. Uses OpenZeppelin's
+     * onlyOwner modifier to secure the function.
+     *
+     * @param _provider address of the default provider
+     */
+    function setProvider(address _provider) external onlyOwner {
+        provider = _provider;
+    }
+
+    /**
+     * @dev setFee change default fee. Uses OpenZeppelin's
+     * onlyOwner modifier to secure the function.
+     *
+     * @param _fee uint256 default fee
+     */
+    function setFee(uint256 _fee) external onlyOwner {
+        fee = _fee;
+    }
+
+    /**
+     * @dev increaseRouterAllowance allows the Router to spend xFUND on behalf of this
+     * smart contract.
+     *
+     * NOTE: Calls the internal _increaseRouterAllowance function in ConsumerBase.sol.
+     *
+     * Required so that xFUND fees can be paid. Uses OpenZeppelin's onlyOwner modifier
+     * to secure the function.
+     *
+     * @param _amount uint256 amount to increase
+     */
+    function increaseRouterAllowance(uint256 _amount) external onlyOwner {
+        require(_increaseRouterAllowance(_amount));
+    }
+
+    /**
+     * @dev setRouter allows updating the Router contract address
+     *
+     * NOTE: Calls the internal setRouter function in ConsumerBase.sol.
+     *
+     * Can be used if network upgrades require new Router deployments.
+     * Uses OpenZeppelin's onlyOwner modifier to secure the function.
+     *
+     * @param _router address new Router address
+     */
+    function setRouter(address _router) external onlyOwner {
+        require(_setRouter(_router));
+    }
+
+    /**
+     * @dev increaseRouterAllowance allows contract owner to withdraw
+     * any xFUND held in this contract.
+     * Uses OpenZeppelin's onlyOwner modifier to secure the function.
+     *
+     * @param _to address recipient
+     * @param _value uint256 amount to withdraw
+     */
+    function withdrawxFund(address _to, uint256 _value) external onlyOwner {
+        require(xFUND.transfer(_to, _value), "Not enough xFUND");
     }
 
     /**

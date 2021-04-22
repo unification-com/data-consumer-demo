@@ -21,7 +21,7 @@
   "homepage": "https://github.com/unification-com/data-consumer-demo#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^4.0.0",
-    "@unification-com/xfund-router": "0.4.1",
+    "@unification-com/xfund-router": "0.4.2",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {

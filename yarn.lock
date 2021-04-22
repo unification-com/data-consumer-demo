@@ -367,10 +367,10 @@
   dependencies:
     web3 "*"
 
-"@unification-com/xfund-router@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@unification-com/xfund-router/-/xfund-router-0.4.1.tgz#9e1d820b4f7d784fb0b359d51ac2b2c11df0f169"
-  integrity sha512-x1/rplpRiHRI49Uy3s+EkxujXC6v8unaHTzFRfezDQoLI4/1qmS2gUuEwvssMVHumoFb6qHrlSh+qMR3wMalZg==
+"@unification-com/xfund-router@0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@unification-com/xfund-router/-/xfund-router-0.4.2.tgz#a3c7647ae71a1b0b1ae12b6f994de94f66f2a0c0"
+  integrity sha512-uCW/tgIVKP6G6zkzmTXyCHEM57zPEhOWIS9fRxFPAdpMGVCRG9kHlZA+rBHBYXC949qHOEC5MHI1Uamr3+OI4g==
   dependencies:
     "@openzeppelin/contracts" "^4.0.0"
     "@truffle/hdwallet-provider" "^1.2.0"

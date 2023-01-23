@@ -87,13 +87,13 @@ The **Goerli** values for `ROUTER_ADDRESS` and `XFUND_ADDRESS` can be found at
 The **Goerli** values for `PROVIDER_ADDRESS` and `FEE` can be found at
 [https://docs.finchains.io/guide/ooo_api.html](https://docs.finchains.io/guide/ooo_api.html).
 
-At the date of commit, these values are:
+At the date of commit, for Goerli these values are:
 
 ```
-ROUTER_ADDRESS=0x05AB63BeC9CfC3897a20dE62f5f812de10301FDf
-XFUND_ADDRESS=0x245330351344F9301690D5D8De2A07f5F32e1149
+ROUTER_ADDRESS=0xf6b5d6eafE402d22609e685DE3394c8b359CaD31
+XFUND_ADDRESS=0xb07C72acF3D7A5E9dA28C56af6F93862f8cc8196
 PROVIDER_ADDRESS=0x611661f4B5D82079E924AcE2A6D113fAbd214b14
-FEE=100000000
+FEE=100000
 ```
 
 ### 5. Deploy
@@ -138,7 +138,7 @@ npx truffle console --network=goerli
 The following steps need only be done periodically, to ensure all parties have
 the correct amount of tokens and gas to pay for data.
 
-Go to [xFUNDMOCK](https://goerli.etherscan.io/address/0x245330351344F9301690D5D8De2A07f5F32e1149#writeContract)
+Go to [xFUNDMOCK](https://goerli.etherscan.io/address/0xb07C72acF3D7A5E9dA28C56af6F93862f8cc8196#writeContract)
 on Etherscan, and connect MetaMask **with the account used to deploy the `DemoConsumer`
 smart contract**, then run the `gimme()` function. This is a faucet function, and will
 supply your wallet with 10 `xFUNDMOCK` tokens. You may do this once per hour.
@@ -201,7 +201,7 @@ value. We are requesting the mean US dollar (`USD`) price of Bitcoin (`BTC`), wi
 outliers (very high or very low) values removed (`PR.AVI`) from the final mean calculation.
 
 A full list of supported API endpoints is available from the 
-[Finchains OoO API Docs](https://docs.finchains.io/guide/ooo_api.html)
+[Finchains OoO API Docs](https://docs.unification.io/ooo/guide/ooo_api.html)
 
 It may take a block or two for the request to be fully processed - the provider will listen for
 the request, then submit a Tx with the data to the `Router`, which will forward it to

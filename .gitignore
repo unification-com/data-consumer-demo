@@ -113,3 +113,6 @@ dist
 # Solidity
 build
 flattened_contracts
+
+# other
+custom_networks.js

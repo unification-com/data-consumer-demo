@@ -1,5 +1,12 @@
 require("dotenv").config()
-const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider')
+const fs = require('fs')
+
+let customNetworks = {}
+
+if (fs.existsSync("./custom_networks.js")) {
+  customNetworks = require("./custom_networks").customNetworks
+}
 
 const {
   ETH_PKEY,
@@ -21,15 +28,14 @@ module.exports = {
       port: 8545,
       network_id: "*",
     },
-    rinkeby: {
+    goerli: {
       provider: () =>
         new HDWalletProvider({
           privateKeys: [ETH_PKEY],
-          providerOrUrl: `https://rinkeby.infura.io/v3/${INFURA_PROJECT_ID}`
+          providerOrUrl: `https://goerli.infura.io/v3/${INFURA_PROJECT_ID}`,
         }),
-      network_id: "4",
-      gas: 10000000,
-      gasPrice: 100000000000,
+      network_id: "5",
+      gasPrice: 50000000000,
       skipDryRun: true,
     },
     mainnet: {
@@ -40,7 +46,18 @@ module.exports = {
         }),
       network_id: "1",
       gasPrice: 120000000000 // 120e9 = 120 gwei
-    }
+    },
+    polygon: {
+      provider: () =>
+        new HDWalletProvider({
+          privateKeys: [ETH_PKEY],
+          providerOrUrl: `https://polygon-mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
+        }),
+      network_id: "137",
+      gasPrice: 40000000000, // 40 gwei
+      skipDryRun: true,
+    },
+    ...customNetworks,
   },
 
 

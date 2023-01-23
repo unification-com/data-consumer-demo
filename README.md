@@ -57,11 +57,11 @@ Compile the contracts using `truffle`:
 npx truffle compile
 ```
 
-### 3. Get some Test ETH for the Rinkeby Network
+### 3. Get some Test ETH for the Goerli Network
 
 Using Metamask, or similar Wallet manager create a new wallet address (or use an existing one).
 
-Grab some test ETH from the [Rinkeby faucet](https://faucet.rinkeby.io/) for this wallet address.
+Grab some test ETH from the [Goerli faucet](https://faucet.goerli.io/) for this wallet address.
 
 You will also need to make a note of the **Private Key** and **Wallet address** for the next 
 steps.
@@ -81,27 +81,27 @@ key for the **wallet you intend to use to deploy the smart contract** (the one f
 for the `ETH_PKEY` variable. You aill also need an [Infura])(https://infura.io) API key,
 and _optionally_ an [Etherscan](https://etherscan.io/apis) API key.
 
-The **Rinkeby** values for `ROUTER_ADDRESS` and `XFUND_ADDRESS` can be found at
+The **Goerli** values for `ROUTER_ADDRESS` and `XFUND_ADDRESS` can be found at
 [https://docs.finchains.io/contracts.html](https://docs.finchains.io/contracts.html).
 
-The **Rinkeby** values for `PROVIDER_ADDRESS` and `FEE` can be found at
+The **Goerli** values for `PROVIDER_ADDRESS` and `FEE` can be found at
 [https://docs.finchains.io/guide/ooo_api.html](https://docs.finchains.io/guide/ooo_api.html).
 
-At the date of commit, these values are:
+At the date of commit, for Goerli these values are:
 
 ```
-ROUTER_ADDRESS=0x05AB63BeC9CfC3897a20dE62f5f812de10301FDf
-XFUND_ADDRESS=0x245330351344F9301690D5D8De2A07f5F32e1149
+ROUTER_ADDRESS=0xf6b5d6eafE402d22609e685DE3394c8b359CaD31
+XFUND_ADDRESS=0xb07C72acF3D7A5E9dA28C56af6F93862f8cc8196
 PROVIDER_ADDRESS=0x611661f4B5D82079E924AcE2A6D113fAbd214b14
-FEE=100000000
+FEE=100000
 ```
 
 ### 5. Deploy
 
-Once your `.env` is configured, deploy the smart contract on Rinkeby testnet:
+Once your `.env` is configured, deploy the smart contract on Goerli testnet:
 
 ```bash 
-npx truffle deploy --network=rinkeby
+npx truffle deploy --network=goerli
 ```
 
 #### 5.1 Optional - upload and verify contract code to Etherscan
@@ -112,8 +112,8 @@ you can interact with it via Etherscan. You will need an
 by setting the `ETHERSCAN_API` value. Once that's done, run:
 
 ```bash
-npx truffle run verify DemoConsumer --network=rinkeby
-npx truffle run verify DemoConsumerCustom --network=rinkeby
+npx truffle run verify DemoConsumer --network=goerli
+npx truffle run verify DemoConsumerCustom --network=goerli
 ```
 
 ## Interacting
@@ -127,10 +127,10 @@ See the `customRequestData` and `getPrice` functions in the
 [DemoConsumerCustom.sol](contracts/DemoConsumerCustom.sol) contract
 for examples on how to interact with the customised version.
 
-Run the `truffle` development console, and connect to the Rinkeby testnet:
+Run the `truffle` development console, and connect to the Goerli testnet:
 
 ```bash
-npx truffle console --network=rinkeby
+npx truffle console --network=goerli
 ```
 
 ### Initialising
@@ -138,7 +138,7 @@ npx truffle console --network=rinkeby
 The following steps need only be done periodically, to ensure all parties have
 the correct amount of tokens and gas to pay for data.
 
-Go to [xFUNDMOCK](https://rinkeby.etherscan.io/address/0x245330351344F9301690D5D8De2A07f5F32e1149#writeContract)
+Go to [xFUNDMOCK](https://goerli.etherscan.io/address/0xb07C72acF3D7A5E9dA28C56af6F93862f8cc8196#writeContract)
 on Etherscan, and connect MetaMask **with the account used to deploy the `DemoConsumer`
 smart contract**, then run the `gimme()` function. This is a faucet function, and will
 supply your wallet with 10 `xFUNDMOCK` tokens. You may do this once per hour.
@@ -147,14 +147,14 @@ Within the `truffle` console, load the contract instances, and set some variable
 ready for interaction
 
 ```bash 
-truffle(rinkeby)> let provider = process.env.PROVIDER_ADDRESS
-truffle(rinkeby)> let demoConsumer = await DemoConsumer.deployed()
+truffle(goerli)> let provider = process.env.PROVIDER_ADDRESS
+truffle(goerli)> let demoConsumer = await DemoConsumer.deployed()
 ```
 
 Get the deployed address for your `DemoConsumer` smart contract:
 
 ```bash 
-truffle(rinkeby)> demoConsumer.address
+truffle(goerli)> demoConsumer.address
 ```
 
 Next, using either Etherscan, or MetaMask, transfer 5 `xFUNDMOCK` tokens to your
@@ -163,15 +163,15 @@ Next, using either Etherscan, or MetaMask, transfer 5 `xFUNDMOCK` tokens to your
 Wait for the transaction to succeed, then get the current account information
 
 ```bash
-truffle(rinkeby)> let accounts = await web3.eth.getAccounts()
-truffle(rinkeby)> let consumerOwner = accounts[0]
+truffle(goerli)> let accounts = await web3.eth.getAccounts()
+truffle(goerli)> let consumerOwner = accounts[0]
 ```
 
 Then we need to allow the `Router` smart contract to pay fees on the `DemoConsumer` contract's
 behalf:
 
 ```bash 
-truffle(rinkeby)> demoConsumer.increaseRouterAllowance("115792089237316195423570985008687907853269984665640564039457584007913129639935", {from: consumerOwner})
+truffle(goerli)> demoConsumer.increaseRouterAllowance("115792089237316195423570985008687907853269984665640564039457584007913129639935", {from: consumerOwner})
 ```
 
 ### Requesting Data
@@ -183,8 +183,8 @@ tokens every so often.
 First, check the current `price` in your `DemoConsumer` contract. Run:
 
 ```bash
-truffle(rinkeby)> let priceBefore = await demoConsumer.getPrice()
-truffle(rinkeby)> priceBefore.toString()
+truffle(goerli)> let priceBefore = await demoConsumer.getPrice()
+truffle(goerli)> priceBefore.toString()
 ```
 
 The result should be 0.
@@ -192,8 +192,8 @@ The result should be 0.
 Next, request some data from the provider. Run:
 
 ```bash
-truffle(rinkeby)> let endpoint = web3.utils.asciiToHex("BTC.GBP.PR.AVC.24H")
-truffle(rinkeby)> demoConsumer.requestData(endpoint, {from: consumerOwner})
+truffle(goerli)> let endpoint = web3.utils.asciiToHex("BTC.GBP.PR.AVC.24H")
+truffle(goerli)> demoConsumer.requestData(endpoint, {from: consumerOwner})
 ```
 
 The first command encodes the data endpoint (the data we want to get) into a bytes32
@@ -201,7 +201,7 @@ value. We are requesting the mean US dollar (`USD`) price of Bitcoin (`BTC`), wi
 outliers (very high or very low) values removed (`PR.AVI`) from the final mean calculation.
 
 A full list of supported API endpoints is available from the 
-[Finchains OoO API Docs](https://docs.finchains.io/guide/ooo_api.html)
+[Finchains OoO API Docs](https://docs.unification.io/ooo/guide/ooo_api.html)
 
 It may take a block or two for the request to be fully processed - the provider will listen for
 the request, then submit a Tx with the data to the `Router`, which will forward it to
@@ -210,15 +210,15 @@ your smart contract.
 After 30 seconds or so, run:
 
 ```bash
-truffle(rinkeby)> let priceAfter = await demoConsumer.getPrice()
-truffle(rinkeby)> priceAfter.toString()
+truffle(goerli)> let priceAfter = await demoConsumer.getPrice()
+truffle(goerli)> priceAfter.toString()
 ```
 
 If the price is still 0, simply run the following a couple more times:
 
 ```bash
-truffle(rinkeby)> priceAfter = await demoConsumer.price()
-truffle(rinkeby)> priceAfter.toString()
+truffle(goerli)> priceAfter = await demoConsumer.price()
+truffle(goerli)> priceAfter.toString()
 ```
 
 The price should now be a non-zero value.
@@ -226,8 +226,8 @@ The price should now be a non-zero value.
 To convert to the actual price:
 
 ```bash
-truffle(rinkeby)> let realPrice = web3.utils.fromWei(priceAfter)
-truffle(rinkeby)> realPrice.toString()
+truffle(goerli)> let realPrice = web3.utils.fromWei(priceAfter)
+truffle(goerli)> realPrice.toString()
 ```
 
 **Note**: the Oracle sends all price data converted to `actualPrice * (10 ** 18)` in
@@ -236,10 +236,10 @@ order to remove any decimals.
 ## Helper scripts
 
 There are a couple of helper scripts in `dev_scripts` which can be run via Truffle
-to automate requesting and cancelling data requests on Rinkeby Testnet for your contract.
+to automate requesting and cancelling data requests on Goerli Testnet for your contract.
 
 Request data and check fulfilment with:
 
 ```bash
-npx truffle exec dev_scripts/request-data.js --network=rinkeby
+npx truffle exec dev_scripts/request-data.js --network=goerli
 ```

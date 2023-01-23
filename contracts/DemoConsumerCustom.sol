@@ -13,7 +13,7 @@ contract DemoConsumerCustom  is ConsumerBase, Ownable {
     address private provider;
 
     // default fee to use for data requests
-    uint256 private fee;
+    uint256 public fee;
 
     // map bytes32(BaseTarget) to current price
     mapping(bytes32 => uint256) public prices;

@@ -14,6 +14,11 @@ how the base contract can be extended to suite your needs.
 The interaction guide below focuses on the simpler `DemoConsumer` smart contract, but
 both are deployed during the process, and can be interacted with.
 
+## Custom networks
+
+Copy the `custom_networks.example.js` to `custom_networks.js` and modify as required. It will then be possible to
+pass the network using the `--network` flag with any `truffle` command.
+
 ## Deploying
 
 ### 1. Install dependencies

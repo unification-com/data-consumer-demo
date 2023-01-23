@@ -14,10 +14,14 @@ module.exports = async function(callback) {
     let tx
     const xfund = await new web3.eth.Contract(abi, XFUND_ADDRESS)
     switch(network) {
+      case 'mainnet':
+        console.log(`mainnet does not have gimme function!`)
+        callback()
+        break
       case 'development':
       case 'develop':
       case 'goerli':
-      case 'mainnet':
+      default:
         console.log("gimme")
         tx = await xfund.methods.gimme().send({from: consumerOwner})
         console.log(tx)

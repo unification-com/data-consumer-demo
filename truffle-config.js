@@ -38,6 +38,17 @@ module.exports = {
       gasPrice: 50000000000,
       skipDryRun: true,
     },
+    sepolia: {
+      provider: () =>
+          new HDWalletProvider({
+            privateKeys: [ETH_PKEY],
+            providerOrUrl: `https://sepolia.infura.io/v3/${INFURA_PROJECT_ID}`,
+          }),
+      network_id: "11155111",
+      gas: 10000000,
+      gasPrice: 5000000000,
+      skipDryRun: true,
+    },
     mainnet: {
       provider: () =>
         new HDWalletProvider({

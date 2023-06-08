@@ -57,11 +57,11 @@ Compile the contracts using `truffle`:
 npx truffle compile
 ```
 
-### 3. Get some Test ETH for the Goerli Network
+### 3. Get some Test ETH for the Sepolia Network
 
 Using Metamask, or similar Wallet manager create a new wallet address (or use an existing one).
 
-Grab some test ETH from the [Goerli faucet](https://faucet.goerli.io/) for this wallet address.
+Grab some test ETH from the [Sepolia faucet](https://faucet.sepolia.io/) for this wallet address.
 
 You will also need to make a note of the **Private Key** and **Wallet address** for the next 
 steps.
@@ -81,13 +81,13 @@ key for the **wallet you intend to use to deploy the smart contract** (the one f
 for the `ETH_PKEY` variable. You aill also need an [Infura])(https://infura.io) API key,
 and _optionally_ an [Etherscan](https://etherscan.io/apis) API key.
 
-The **Goerli** values for `ROUTER_ADDRESS` and `XFUND_ADDRESS` can be found at
+The **Sepolia** values for `ROUTER_ADDRESS` and `XFUND_ADDRESS` can be found at
 [https://docs.finchains.io/contracts.html](https://docs.finchains.io/contracts.html).
 
-The **Goerli** values for `PROVIDER_ADDRESS` and `FEE` can be found at
+The **Sepolia** values for `PROVIDER_ADDRESS` and `FEE` can be found at
 [https://docs.finchains.io/guide/ooo_api.html](https://docs.finchains.io/guide/ooo_api.html).
 
-At the date of commit, for Goerli these values are:
+At the date of commit, for Sepolia these values are:
 
 ```
 ROUTER_ADDRESS=0xf6b5d6eafE402d22609e685DE3394c8b359CaD31
@@ -98,10 +98,10 @@ FEE=100000
 
 ### 5. Deploy
 
-Once your `.env` is configured, deploy the smart contract on Goerli testnet:
+Once your `.env` is configured, deploy the smart contract on Sepolia testnet:
 
 ```bash 
-npx truffle deploy --network=goerli
+npx truffle deploy --network=sepolia
 ```
 
 #### 5.1 Optional - upload and verify contract code to Etherscan
@@ -112,8 +112,8 @@ you can interact with it via Etherscan. You will need an
 by setting the `ETHERSCAN_API` value. Once that's done, run:
 
 ```bash
-npx truffle run verify DemoConsumer --network=goerli
-npx truffle run verify DemoConsumerCustom --network=goerli
+npx truffle run verify DemoConsumer --network=sepolia
+npx truffle run verify DemoConsumerCustom --network=sepolia
 ```
 
 ## Interacting
@@ -127,10 +127,10 @@ See the `customRequestData` and `getPrice` functions in the
 [DemoConsumerCustom.sol](contracts/DemoConsumerCustom.sol) contract
 for examples on how to interact with the customised version.
 
-Run the `truffle` development console, and connect to the Goerli testnet:
+Run the `truffle` development console, and connect to the Sepolia testnet:
 
 ```bash
-npx truffle console --network=goerli
+npx truffle console --network=sepolia
 ```
 
 ### Initialising
@@ -138,7 +138,7 @@ npx truffle console --network=goerli
 The following steps need only be done periodically, to ensure all parties have
 the correct amount of tokens and gas to pay for data.
 
-Go to [xFUNDMOCK](https://goerli.etherscan.io/address/0xb07C72acF3D7A5E9dA28C56af6F93862f8cc8196#writeContract)
+Go to [xFUNDMOCK](https://sepolia.etherscan.io/address/0xb07C72acF3D7A5E9dA28C56af6F93862f8cc8196#writeContract)
 on Etherscan, and connect MetaMask **with the account used to deploy the `DemoConsumer`
 smart contract**, then run the `gimme()` function. This is a faucet function, and will
 supply your wallet with 10 `xFUNDMOCK` tokens. You may do this once per hour.
@@ -147,14 +147,14 @@ Within the `truffle` console, load the contract instances, and set some variable
 ready for interaction
 
 ```bash 
-truffle(goerli)> let provider = process.env.PROVIDER_ADDRESS
-truffle(goerli)> let demoConsumer = await DemoConsumer.deployed()
+truffle(sepolia)> let provider = process.env.PROVIDER_ADDRESS
+truffle(sepolia)> let demoConsumer = await DemoConsumer.deployed()
 ```
 
 Get the deployed address for your `DemoConsumer` smart contract:
 
 ```bash 
-truffle(goerli)> demoConsumer.address
+truffle(sepolia)> demoConsumer.address
 ```
 
 Next, using either Etherscan, or MetaMask, transfer 5 `xFUNDMOCK` tokens to your
@@ -163,15 +163,15 @@ Next, using either Etherscan, or MetaMask, transfer 5 `xFUNDMOCK` tokens to your
 Wait for the transaction to succeed, then get the current account information
 
 ```bash
-truffle(goerli)> let accounts = await web3.eth.getAccounts()
-truffle(goerli)> let consumerOwner = accounts[0]
+truffle(sepolia)> let accounts = await web3.eth.getAccounts()
+truffle(sepolia)> let consumerOwner = accounts[0]
 ```
 
 Then we need to allow the `Router` smart contract to pay fees on the `DemoConsumer` contract's
 behalf:
 
 ```bash 
-truffle(goerli)> demoConsumer.increaseRouterAllowance("115792089237316195423570985008687907853269984665640564039457584007913129639935", {from: consumerOwner})
+truffle(sepolia)> demoConsumer.increaseRouterAllowance("115792089237316195423570985008687907853269984665640564039457584007913129639935", {from: consumerOwner})
 ```
 
 ### Requesting Data
@@ -183,8 +183,8 @@ tokens every so often.
 First, check the current `price` in your `DemoConsumer` contract. Run:
 
 ```bash
-truffle(goerli)> let priceBefore = await demoConsumer.getPrice()
-truffle(goerli)> priceBefore.toString()
+truffle(sepolia)> let priceBefore = await demoConsumer.getPrice()
+truffle(sepolia)> priceBefore.toString()
 ```
 
 The result should be 0.
@@ -192,8 +192,8 @@ The result should be 0.
 Next, request some data from the provider. Run:
 
 ```bash
-truffle(goerli)> let endpoint = web3.utils.asciiToHex("BTC.GBP.PR.AVC.24H")
-truffle(goerli)> demoConsumer.requestData(endpoint, {from: consumerOwner})
+truffle(sepolia)> let endpoint = web3.utils.asciiToHex("BTC.GBP.PR.AVC.24H")
+truffle(sepolia)> demoConsumer.requestData(endpoint, {from: consumerOwner})
 ```
 
 The first command encodes the data endpoint (the data we want to get) into a bytes32
@@ -210,15 +210,15 @@ your smart contract.
 After 30 seconds or so, run:
 
 ```bash
-truffle(goerli)> let priceAfter = await demoConsumer.getPrice()
-truffle(goerli)> priceAfter.toString()
+truffle(sepolia)> let priceAfter = await demoConsumer.getPrice()
+truffle(sepolia)> priceAfter.toString()
 ```
 
 If the price is still 0, simply run the following a couple more times:
 
 ```bash
-truffle(goerli)> priceAfter = await demoConsumer.price()
-truffle(goerli)> priceAfter.toString()
+truffle(sepolia)> priceAfter = await demoConsumer.price()
+truffle(sepolia)> priceAfter.toString()
 ```
 
 The price should now be a non-zero value.
@@ -226,8 +226,8 @@ The price should now be a non-zero value.
 To convert to the actual price:
 
 ```bash
-truffle(goerli)> let realPrice = web3.utils.fromWei(priceAfter)
-truffle(goerli)> realPrice.toString()
+truffle(sepolia)> let realPrice = web3.utils.fromWei(priceAfter)
+truffle(sepolia)> realPrice.toString()
 ```
 
 **Note**: the Oracle sends all price data converted to `actualPrice * (10 ** 18)` in
@@ -236,10 +236,11 @@ order to remove any decimals.
 ## Helper scripts
 
 There are a couple of helper scripts in `dev_scripts` which can be run via Truffle
-to automate requesting and cancelling data requests on Goerli Testnet for your contract.
+to automate requesting and cancelling data requests on Sepolia Testnet for your contract.
 
 Request data and check fulfilment with:
 
 ```bash
-npx truffle exec dev_scripts/request-data.js --network=goerli
+npx truffle exec dev_scripts/consumer_xfund.js --network=sepolia
+npx truffle exec dev_scripts/request-data.js --network=sepolia
 ```

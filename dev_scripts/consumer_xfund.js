@@ -21,6 +21,7 @@ module.exports = async function(callback) {
       case 'development':
       case 'develop':
       case 'goerli':
+      case 'sepolia':
       default:
         console.log("gimme")
         tx = await xfund.methods.gimme().send({from: consumerOwner})

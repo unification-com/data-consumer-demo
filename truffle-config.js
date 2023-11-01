@@ -68,6 +68,16 @@ module.exports = {
       gasPrice: 40000000000, // 40 gwei
       skipDryRun: true,
     },
+    shibarium: {
+      provider: () =>
+          new HDWalletProvider({
+            privateKeys: [ETH_PKEY],
+            providerOrUrl: 'https://rpc.shibrpc.com',
+          }),
+      network_id: "109",
+      gasPrice: 10000000000, // 10 gwei
+      skipDryRun: true,
+    },
     ...customNetworks,
   },
 
